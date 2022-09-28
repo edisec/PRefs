@@ -6,8 +6,14 @@ use PhpParser\ParserFactory;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use app\model\Prefs\PRefsVisitor;
+use PhpParser\Node\Expr\BinaryOp\Concat;
+use PhpParser\Node\Expr\Variable;
+use PhpParser\Node\Scalar\Encapsed;
+use support\PRefs\PRefsGlobal;
+
 
 class PrefsModel{
+    
     public function load($scandir)
     {
 
@@ -30,7 +36,7 @@ class PrefsModel{
         if (is_dir($scandir)) {
             $Directory = new \RecursiveDirectoryIterator($scandir);
             $Iterator = new \RecursiveIteratorIterator($Directory);
-            $codefiles = new \RegexIterator($Iterator, '/^.+\.php$/i', \RecursiveRegexIterator::MATCH);
+            $codefiles = new \RegexIterator($Iterator, PRefsGlobal::TargetExtRegex, \RecursiveRegexIterator::MATCH);
         } else {
             $codefiles = array($scandir);
         }
@@ -45,6 +51,7 @@ class PrefsModel{
 
         return $Engine->ivmap;
     }
+
 
     public function getCaller($data,&$ivmap){
         $caller = array();
@@ -63,5 +70,24 @@ class PrefsModel{
         }
 
         return $caller;
+    }
+
+    public static function ifContainsVar($expr){
+        if($expr instanceof Variable) return true;
+        if($expr->expr instanceof Encapsed){
+            return in_array(true,array_map(function($part){return $part instanceof Variable;},$expr->expr->parts));
+        }
+        if($expr->expr instanceof Concat){
+            $ret = self::recursiveCheckConcat($expr->expr);
+            var_dump($ret);
+            return $ret;
+        }
+    }
+
+    public static function recursiveCheckConcat($innerExpr){
+        if(empty($innerExpr)) return false;
+        if($innerExpr instanceof Variable) return true;
+        return self::recursiveCheckConcat($innerExpr->left) || self::recursiveCheckConcat($innerExpr->right);
+        
     }
 }

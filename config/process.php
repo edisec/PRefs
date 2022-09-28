@@ -33,5 +33,11 @@ return [
                 'php', 'html', 'htm', 'env'
             ]
         ]
-    ]
+    ],
+    'prefsps' => [
+        // 这里指定进程类，就是上面定义的Pusher类
+        'handler' => process\Prefsps::class,
+        'listen'  => 'text://127.0.0.1:8888',
+        'count'   => 1,
+    ],
 ];

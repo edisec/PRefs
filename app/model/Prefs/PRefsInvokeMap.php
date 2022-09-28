@@ -2,6 +2,8 @@
 
 namespace app\model\Prefs;
 
+use Webman\Event\Event;
+
 class PRefsInvokeMap
 {
     public $EndInvokeNodes = [];
@@ -11,7 +13,8 @@ class PRefsInvokeMap
 
     public function addEndInvokeNode(PRefsInvokeInfo $ivnode)
     {
-        $this->addNOde($ivnode, $this->EndInvokeNodes);
+        $this->addNode($ivnode, $this->EndInvokeNodes);
+        Event::emit("newCall",json_encode(['name'=>$ivnode->Name,'content'=>$ivnode],JSON_UNESCAPED_UNICODE));
     }
 
     public function addNonEndFuncCall(PRefsInvokeInfo $ivnode)
@@ -29,6 +32,7 @@ class PRefsInvokeMap
         #提取method/function的名字作为key
         $key = $ivnode->Name;
         $procedureNodes[$key][] = $ivnode;
+        
         
     }
 

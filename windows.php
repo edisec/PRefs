@@ -8,7 +8,7 @@ use process\Monitor;
 use support\App;
 use Dotenv\Dotenv;
 use Workerman\Worker;
-
+ini_set('memory_limit',-1);
 ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 

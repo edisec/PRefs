@@ -27,7 +27,8 @@
     "php": ">=7.2",
     "workerman/webman-framework": "^1.4.3",
     "monolog/monolog": "^2.0",
-    "nikic/php-parser": "^4.15"
+    "nikic/php-parser": "^4.15",
+    "webman/event": "^1.0"
   },
   "suggest": {
     "ext-event": "For better performance. "

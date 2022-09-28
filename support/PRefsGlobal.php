@@ -2,19 +2,17 @@
 
 namespace support\PRefs;
 
-use PhpParser\Node\Expr\BinaryOp\Concat;
-use PhpParser\Node\Expr\Variable;
-use PhpParser\Node\Scalar\Encapsed;
+
 
 class PRefsGlobal
 {
+    protected static $glbs;
     public const ARRAYFRAME_COUNT = 0;
     public const ARRAYFRAME_BODY = 1;
-    public static $printer;
+    protected static $printer;
     public const TargetFunction = [
         "assert",
         "create_function",
-        "array_map",
         "call_user_func",
         "call_user_func_array",
         "usort",
@@ -49,11 +47,18 @@ class PRefsGlobal
         "parse_url",
         "escapeshellcmd",
         "escapeshellarg",
-        "class_exists",
         "filter_var",
         "mail"
     ];
+    public const TargetExtRegex = '/^.+\.php|.+\.inc$/i';
 
+    public static function get($key){
+        return self::$glbs[$key];
+    }
+
+    public static function set($key,&$data){
+        self::$glbs[$key] = &$data;
+    }
     public static function getPrinter()
     {
         if (empty(self::$printer)) {
@@ -63,23 +68,6 @@ class PRefsGlobal
     }
 
     
-    public static function ifContainsVar($expr){
-        if($expr instanceof Variable) return true;
-        if($expr->expr instanceof Encapsed){
-            return in_array(true,array_map(function($part){return $part instanceof Variable;},$expr->expr->parts));
-        }
-        if($expr->expr instanceof Concat){
-            $ret = self::recursiveCheckConcat($expr->expr);
-            var_dump($ret);
-            return $ret;
-        }
-    }
-
-    public static function recursiveCheckConcat($innerExpr){
-        if(empty($innerExpr)) return false;
-        if($innerExpr instanceof Variable) return true;
-        return self::recursiveCheckConcat($innerExpr->left) || self::recursiveCheckConcat($innerExpr->right);
-        
-    }
+    
 
 }

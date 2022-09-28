@@ -50,7 +50,7 @@ class PRefsVisitor extends NodeVisitorAbstract
         if ($node instanceof MethodCall) {
             $ivnode = $this->PrepareNode($node);
             //check recursive call
-            if (method_exists($ivnode->Name, "__toString") && (strval($ivnode->Method) == strval($ivnode->Name))) {
+            if ((strval($ivnode->Method) == strval($ivnode->Name))) {
                 unset($ivnode);
                 return;
             }
