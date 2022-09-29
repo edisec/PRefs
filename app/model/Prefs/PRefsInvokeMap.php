@@ -14,7 +14,7 @@ class PRefsInvokeMap
     public function addEndInvokeNode(PRefsInvokeInfo $ivnode)
     {
         $this->addNode($ivnode, $this->EndInvokeNodes);
-        Event::emit("newCall",json_encode(['name'=>$ivnode->Name,'content'=>$ivnode],JSON_UNESCAPED_UNICODE));
+        Event::emit("newCall",json_encode(array('name'=>$ivnode->Name,'content'=>$ivnode),JSON_UNESCAPED_UNICODE));
     }
 
     public function addNonEndFuncCall(PRefsInvokeInfo $ivnode)

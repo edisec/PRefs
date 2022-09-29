@@ -7,6 +7,7 @@ namespace support\PRefs;
 class PRefsGlobal
 {
     protected static $glbs;
+    public const MSG_SEPERATOR = "|@|";
     public const ARRAYFRAME_COUNT = 0;
     public const ARRAYFRAME_BODY = 1;
     protected static $printer;
