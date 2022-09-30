@@ -9,7 +9,7 @@ use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Scalar;
 use PhpParser\NodeTraverser;
-use support\PRefs\PRefsGlobal;
+use support\PrefsGlobal;
 
 class PRefsVisitor extends NodeVisitorAbstract
 {

@@ -9,7 +9,7 @@ use app\model\Prefs\PRefsVisitor;
 use PhpParser\Node\Expr\BinaryOp\Concat;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Scalar\Encapsed;
-use support\PRefs\PRefsGlobal;
+use support\PrefsGlobal;
 
 
 class PrefsModel{

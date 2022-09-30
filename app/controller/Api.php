@@ -3,7 +3,7 @@
 namespace app\controller;
 
 use app\model\PrefsModel;
-use support\PRefs\PRefsGlobal;
+use support\PrefsGlobal;
 use support\Request;
 use Workerman\Connection\AsyncTcpConnection;
 use Workerman\Protocols\Http\Response;

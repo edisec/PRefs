@@ -2,7 +2,7 @@
 namespace process;
 
 use app\model\PrefsModel;
-use support\PRefs\PRefsGlobal;
+use support\PrefsGlobal;
 use Workerman\Connection\TcpConnection;
 
 class Prefsps

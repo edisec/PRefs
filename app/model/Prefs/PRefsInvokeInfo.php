@@ -5,7 +5,7 @@ use JsonSerializable;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
-use support\PRefs\PRefsGlobal;
+use support\PrefsGlobal;
 
 class PRefsInvokeInfo implements JsonSerializable
 {

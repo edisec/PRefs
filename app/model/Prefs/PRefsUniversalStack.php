@@ -1,7 +1,7 @@
 <?php
 namespace app\model\Prefs;
 
-use support\PRefs\PRefsGlobal;
+use support\PrefsGlobal;
 
 class UniversalStack{
     private $stack;

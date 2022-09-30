@@ -1,6 +1,6 @@
 <?php
 
-use support\PRefs\PRefsGlobal;
+use support\PrefsGlobal;
 use Workerman\Protocols\Http\ServerSentEvents;
 
 /**
