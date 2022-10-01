@@ -3,6 +3,9 @@ namespace process;
 
 use app\model\PrefsModel;
 use support\PrefsGlobal;
+use support\Log;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 use Workerman\Connection\TcpConnection;
 
 class Prefsps
@@ -11,12 +14,12 @@ class Prefsps
     public function onConnect(TcpConnection $connection)
     {
         ini_set('memory_limit',-1);
-        echo date("[h:m:d]",time())."onConnect\n";
+        Log::debug("onConnect");
     }
 
     public function onWebSocketConnect(TcpConnection $connection, $http_buffer)
     {
-        echo date("[h:m:d]",time())."onWebSocketConnect\n";
+        Log::debug("onWebSocketConnect");
     }
 
     public function onMessage(TcpConnection $connection, $data)
@@ -27,7 +30,7 @@ class Prefsps
                 PRefsGlobal::set("taskconn",$connection);
                 $prefsmodel = new PrefsModel;
                 $this->ivmap = $prefsmodel->load($content);
-                echo date("[h:m:d]",time())."Loading finished.\n";
+                Log::debug("Loading finished");
                 $connection->send("Loading finished.");
                 break;
             case "getCaller":
@@ -42,6 +45,6 @@ class Prefsps
 
     public function onClose(TcpConnection $connection)
     {
-        echo date("[h:m:d]",time())."onClose\n";
+        Log::debug("onClose");
     }
 }

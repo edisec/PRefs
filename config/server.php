@@ -13,11 +13,11 @@
  */
 
 return [
-    'listen' => 'http://0.0.0.0:8787',
+    'listen' => 'http://127.0.0.1:8787',
     'transport' => 'tcp',
     'context' => [],
     'name' => 'webman',
-    'count' => cpu_count() * 2,
+    'count' => 1,//cpu_count() * 2,
     'user' => '',
     'group' => '',
     'reusePort' => false,

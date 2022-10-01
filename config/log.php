@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of webman.
  *
@@ -25,6 +26,17 @@ return [
                 'formatter' => [
                     'class' => Monolog\Formatter\LineFormatter::class,
                     'constructor' => [null, 'Y-m-d H:i:s', true],
+                ],
+            ],
+            [
+                'class' => Monolog\Handler\StreamHandler::class,
+                'constructor' => [
+                    'php://stdout',
+                    Monolog\Logger::DEBUG,
+                ],
+                'formatter' => [
+                    'class' => Monolog\Formatter\LineFormatter::class,
+                    'constructor' => [null, 'Y-m-d H:i:s.u', true],
                 ],
             ]
         ],

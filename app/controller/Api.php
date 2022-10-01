@@ -2,9 +2,9 @@
 
 namespace app\controller;
 
-use app\model\PrefsModel;
 use support\PrefsGlobal;
 use support\Request;
+use support\Log;
 use Workerman\Connection\AsyncTcpConnection;
 use Workerman\Protocols\Http\Response;
 use Workerman\Protocols\Http\ServerSentEvents;
@@ -19,11 +19,9 @@ class Api
             $task_connection = new AsyncTcpConnection('text://127.0.0.1:8888');
             $task_connection->send(loadmsg($dirname));
             $task_connection->onMessage = function (AsyncTcpConnection $task_connection, $task_result) {
-
                 PRefsGlobal::get("loadsse")->send(ssemessage($task_result));
                 if ($task_result == "Loading finished.") {
                     $task_connection->close();
-                    PRefsGlobal::get("loadsse")->close();
                 }
             };
             $task_connection->connect();
@@ -47,7 +45,6 @@ class Api
                 $this->getter_connection = new AsyncTcpConnection('text://127.0.0.1:8888');
                 $this->getter_connection->onMessage = function (AsyncTcpConnection $task_connection, $task_result) {
                     PRefsGlobal::get("callersse")->send(ssemessage($task_result));
-                    
                 };
                 $this->getter_connection->connect();
             }
@@ -74,6 +71,7 @@ class Api
             // 首先发送一个 Content-Type: text/event-stream 头的响应
             $connection->send(new Response(200, ['Content-Type' => 'text/event-stream', 'Access-Control-Allow-Origin' => '*']));
             PRefsGlobal::set($name, $connection);
+            Log::debug($name." established!");
             return new ServerSentEvents(['event' => 'message', 'data' => 'hello', 'id' => 1]);
         }
         return ok("ok");
