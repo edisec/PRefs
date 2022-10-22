@@ -17,6 +17,7 @@ function ok($msg){
 }
 
 function ssemessage($data){
+    if(!is_string($data)) $data = json_encode($data);
     return new ServerSentEvents(['event' => 'message', 'data' => $data]);
 }
 

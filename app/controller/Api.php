@@ -48,6 +48,11 @@ class Api
                 };
                 $this->getter_connection->connect();
             }
+            //controller
+            if(empty($data['Method']) || empty($data['MethodType'])){
+                PRefsGlobal::get("callersse")->send(ssemessage(array()));
+                return ok("success");
+            }
             $this->getter_connection->send(getCallermsg(json_encode($data)));
             
             return ok("success");

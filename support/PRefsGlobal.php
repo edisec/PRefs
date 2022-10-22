@@ -51,7 +51,7 @@ class PRefsGlobal
         "filter_var",
         "mail"
     ];
-    public const TargetExtRegex = '/^.+\.php|.+\.inc$/i';
+    public const TargetExtRegex = "/^.+\.php$|^.+\.inc$/i";
 
     public static function get($key){
         return self::$glbs[$key];

@@ -6,6 +6,7 @@ use PhpParser\Node\Expr\Eval_;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\Include_;
 use PhpParser\Node\Expr\MethodCall;
+use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Scalar;
 use PhpParser\NodeTraverser;
@@ -27,6 +28,7 @@ class PRefsVisitor extends NodeVisitorAbstract
         if ($node instanceof FuncCall) {
             $ivnode = $this->PrepareNode($node);
             if (in_array($printer->prettyPrint([$node->name]), $TargetFunction)) {
+                
                 $this->ivmap->addEndInvokeNode($ivnode);
                 return NodeTraverser::DONT_TRAVERSE_CHILDREN;
             }
@@ -50,7 +52,7 @@ class PRefsVisitor extends NodeVisitorAbstract
         if ($node instanceof MethodCall) {
             $ivnode = $this->PrepareNode($node);
             //check recursive call
-            if ((strval($ivnode->Method) == strval($ivnode->Name))) {
+            if ($node->var instanceof Variable && $node->var->name == 'this' && ($ivnode->Method == $ivnode->Name)) {
                 unset($ivnode);
                 return;
             }
